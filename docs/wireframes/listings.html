@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Danh Sách Bất Động Sản - Sàn Giao Dịch BĐS Việt Nam</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== CSS RESET ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ========== DESIGN TOKENS ========== */
+    :root {
+      --color-primary: #0D47A1;
+      --color-primary-light: #42A5F5;
+      --color-success: #28A745;
+      --color-danger: #E53935;
+      --color-warning: #FF6F61;
+
+      --color-white: #FFFFFF;
+      --color-cream: #F5F5F5;
+      --color-gray-light: #E0E0E0;
+      --color-gray-medium: #9E9E9E;
+      --color-gray-dark: #2C3E50;
+
+      --font-heading: 'Be Vietnam Pro', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+      --transition-base: 0.2s ease;
+      --transition-slow: 0.3s ease;
+    }
+
+    /* ========== BASE STYLES ========== */
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-gray-dark);
+      background: var(--color-cream);
+      margin: 0;
+      padding-bottom: 80px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-white);
+      text-decoration: none;
+    }
+
+    .header-search {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 var(--space-lg);
+      display: none;
+    }
+
+    .header-search input {
+      width: 100%;
+      padding: 10px 16px;
+      border: none;
+      border-radius: var(--border-radius-md);
+      font-size: 16px;
+    }
+
+    /* ========== MAIN LAYOUT ========== */
+    .main-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      gap: var(--space-lg);
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    /* ========== FILTER SIDEBAR ========== */
+    .filter-sidebar {
+      width: 280px;
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      height: fit-content;
+      position: sticky;
+      top: 80px;
+      display: none;
+    }
+
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .filter-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-gray-dark);
+    }
+
+    .filter-reset {
+      color: var(--color-primary-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .filter-section {
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--color-gray-light);
+    }
+
+    .filter-section:last-child {
+      border-bottom: none;
+    }
+
+    .filter-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-gray-dark);
+      margin-bottom: var(--space-md);
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      background: var(--color-white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .price-range {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .price-range input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .checkbox-item label {
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* ========== CONTENT AREA ========== */
+    .content-area {
+      flex: 1;
+    }
+
+    /* ========== TOOLBAR ========== */
+    .toolbar {
+      background: var(--color-white);
+      padding: var(--space-md);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .results-count {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-gray-dark);
+    }
+
+    .results-count strong {
+      color: var(--color-primary);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+    }
+
+    .btn-filter {
+      padding: 10px 16px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .btn-map-toggle {
+      padding: 10px 16px;
+      background: var(--color-white);
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 40px;
+    }
+
+    .sort-select {
+      padding: 10px 12px;
+      border: 2px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      background: var(--color-white);
+      min-height: 40px;
+    }
+
+    /* ========== PROPERTY GRID ========== */
+    .property-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .property-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-slow);
+      cursor: pointer;
+    }
+
+    .property-card:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-4px);
+    }
+
+    .property-image-container {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--color-gray-light);
+    }
+
+    .property-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+    }
+
+    .property-card:hover .property-image {
+      transform: scale(1.05);
+    }
+
+    .price-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--color-danger);
+      color: var(--color-white);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .favorite-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      transition: var(--transition-base);
+    }
+
+    .favorite-btn:hover {
+      background: var(--color-white);
+      transform: scale(1.1);
+    }
+
+    .property-content {
+      padding: var(--space-md);
+    }
+
+    .property-type {
+      display: inline-block;
+      padding: 4px 8px;
+      background: var(--color-primary-light);
+      color: var(--color-white);
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 4px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .property-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-gray-dark);
+      margin: var(--space-sm) 0;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .property-location {
+      font-size: 14px;
+      color: var(--color-gray-medium);
+      margin-bottom: var(--space-sm);
+    }
+
+    .property-stats {
+      display: flex;
+      gap: var(--space-md);
+      margin: var(--space-md) 0;
+      font-size: 14px;
+      color: var(--color-gray-dark);
+    }
+
+    .property-description {
+      font-size: 14px;
+      color: var(--color-gray-medium);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: var(--space-md);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 12px 24px;
+      min-height: 48px;
+      background: transparent;
+      color: var(--color-primary-light);
+      border: 2px solid var(--color-primary-light);
+      border-radius: var(--border-radius-md);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-base);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-primary-light);
+      color: var(--color-white);
+    }
+
+    /* ========== PAGINATION ========== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-xl);
+      padding: var(--space-lg) 0;
+    }
+
+    .page-btn {
+      min-width: 40px;
+      min-height: 40px;
+      padding: 8px 12px;
+      background: var(--color-white);
+      color: var(--color-gray-dark);
+      border: 2px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-base);
+    }
+
+    .page-btn:hover {
+      background: var(--color-primary-light);
+      color: var(--color-white);
+      border-color: var(--color-primary-light);
+    }
+
+    .page-btn.active {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
+    }
+
+    /* ========== BOTTOM NAVIGATION ========== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      z-index: 1000;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 16px;
+      min-width: 48px;
+      color: var(--color-gray-medium);
+      text-decoration: none;
+      font-size: 12px;
+      transition: var(--transition-base);
+    }
+
+    .nav-item.active {
+      color: var(--color-primary);
+    }
+
+    .nav-icon {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    /* ========== RESPONSIVE DESIGN ========== */
+    @media (min-width: 768px) {
+      .header-search {
+        display: block;
+      }
+
+      .property-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .btn-filter {
+        display: none;
+      }
+
+      .filter-sidebar {
+        display: block;
+      }
+
+      .bottom-nav {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .property-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .property-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="/index.html" class="logo">🏠 BĐS Việt Nam</a>
+      <div class="header-search">
+        <input type="text" placeholder="Tìm kiếm theo khu vực, dự án...">
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="main-container">
+
+    <!-- Filter Sidebar (Desktop) -->
+    <aside class="filter-sidebar">
+      <div class="filter-header">
+        <h2 class="filter-title">Bộ lọc</h2>
+        <button class="filter-reset">Xóa bộ lọc</button>
+      </div>
+
+      <!-- Property Type Filter -->
+      <div class="filter-section">
+        <h3 class="filter-section-title">Loại bất động sản</h3>
+        <select class="filter-select">
+          <option>Tất cả</option>
+          <option>Căn hộ</option>
+          <option>Nhà riêng</option>
+          <option>Đất nền</option>
+          <option>Biệt thự</option>
+        </select>
+      </div>
+
+      <!-- Price Range Filter -->
+      <div class="filter-section">
+        <h3 class="filter-section-title">Khoảng giá (tỷ VND)</h3>
+        <div class="price-range">
+          <input type="number" placeholder="Từ" min="0">
+          <input type="number" placeholder="Đến" min="0">
+        </div>
+      </div>
+
+      <!-- Bedrooms Filter -->
+      <div class="filter-section">
+        <h3 class="filter-section-title">Số phòng ngủ</h3>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="bed1">
+            <label for="bed1">1 phòng</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="bed2">
+            <label for="bed2">2 phòng</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="bed3">
+            <label for="bed3">3 phòng</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="bed4">
+            <label for="bed4">4+ phòng</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bathrooms Filter -->
+      <div class="filter-section">
+        <h3 class="filter-section-title">Số phòng tắm</h3>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="bath1">
+            <label for="bath1">1 phòng</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="bath2">
+            <label for="bath2">2 phòng</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="bath3">
+            <label for="bath3">3+ phòng</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Area Filter -->
+      <div class="filter-section">
+        <h3 class="filter-section-title">Diện tích (m²)</h3>
+        <div class="price-range">
+          <input type="number" placeholder="Từ" min="0">
+          <input type="number" placeholder="Đến" min="0">
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Content Area -->
+    <main class="content-area">
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="results-count">
+          Tìm thấy <strong>156 kết quả</strong>
+        </div>
+
+        <div class="toolbar-actions">
+          <button class="btn-filter">📊 Bộ lọc</button>
+          <button class="btn-map-toggle">🗺️ Bản đồ</button>
+          <select class="sort-select">
+            <option>Mới nhất</option>
+            <option>Giá thấp → cao</option>
+            <option>Giá cao → thấp</option>
+            <option>Diện tích lớn nhất</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Property Grid -->
+      <div class="property-grid">
+
+        <!-- Property Card 1 -->
+        <div class="property-card">
+          <div class="property-image-container">
+            <img src="https://via.placeholder.com/400x225/42A5F5/FFFFFF?text=Căn+hộ+1" alt="Căn hộ" class="property-image" loading="lazy">
+            <div class="price-badge">5.2 tỷ</div>
+            <button class="favorite-btn" aria-label="Lưu tin đăng">♡</button>
+          </div>
+          <div class="property-content">
+            <span class="property-type">Căn hộ</span>
+            <h3 class="property-title">Căn hộ cao cấp view sông Sài Gòn tuyệt đẹp</h3>
+            <p class="property-location">📍 Quận 1, TP. Hồ Chí Minh</p>
+            <div class="property-stats">
+              <span>🛏️ 3</span>
+              <span>🛁 2</span>
+              <span>📐 120m²</span>
+            </div>
+            <p class="property-description">Vị trí đắc địa, nội thất cao cấp...</p>
+            <button class="btn-secondary">Xem chi tiết</button>
+          </div>
+        </div>
+
+        <!-- Property Card 2 -->
+        <div class="property-card">
+          <div class="property-image-container">
+            <img src="https://via.placeholder.com/400x225/28A745/FFFFFF?text=Nhà+phố" alt="Nhà phố" class="property-image" loading="lazy">
+            <div class="price-badge">8.5 tỷ</div>
+            <button class="favorite-btn" aria-label="Lưu tin đăng">♡</button>
+          </div>
+          <div class="property-content">
+            <span class="property-type">Nhà riêng</span>
+            <h3 class="property-title">Nhà phố 4 tầng mặt tiền đường lớn</h3>
+            <p class="property-location">📍 Quận 3, TP. Hồ Chí Minh</p>
+            <div class="property-stats">
+              <span>🛏️ 4</span>
+              <span>🛁 3</span>
+              <span>📐 180m²</span>
+            </div>
+            <p class="property-description">Mặt tiền rộng, vị trí kinh doanh...</p>
+            <button class="btn-secondary">Xem chi tiết</button>
+          </div>
+        </div>
+
+        <!-- Property Card 3 -->
+        <div class="property-card">
+          <div class="property-image-container">
+            <img src="https://via.placeholder.com/400x225/C5A880/FFFFFF?text=Biệt+thự" alt="Biệt thự" class="property-image" loading="lazy">
+            <div class="price-badge">15 tỷ</div>
+            <button class="favorite-btn" aria-label="Lưu tin đăng">♡</button>
+          </div>
+          <div class="property-content">
+            <span class="property-type">Biệt thự</span>
+            <h3 class="property-title">Biệt thự sang trọng khu compound an ninh</h3>
+            <p class="property-location">📍 Quận 2, TP. Hồ Chí Minh</p>
+            <div class="property-stats">
+              <span>🛏️ 5</span>
+              <span>🛁 4</span>
+              <span>📐 300m²</span>
+            </div>
+            <p class="property-description">An ninh 24/7, sân vườn rộng...</p>
+            <button class="btn-secondary">Xem chi tiết</button>
+          </div>
+        </div>
+
+        <!-- Property Card 4 -->
+        <div class="property-card">
+          <div class="property-image-container">
+            <img src="https://via.placeholder.com/400x225/FF6F61/FFFFFF?text=Đất+nền" alt="Đất nền" class="property-image" loading="lazy">
+            <div class="price-badge">2.8 tỷ</div>
+            <button class="favorite-btn" aria-label="Lưu tin đăng">♡</button>
+          </div>
+          <div class="property-content">
+            <span class="property-type">Đất nền</span>
+            <h3 class="property-title">Đất nền KDC cao cấp sổ hồng riêng</h3>
+            <p class="property-location">📍 Bình Dương</p>
+            <div class="property-stats">
+              <span>📐 100m²</span>
+              <span>📄 Sổ hồng</span>
+            </div>
+            <p class="property-description">Hạ tầng hoàn thiện, pháp lý rõ...</p>
+            <button class="btn-secondary">Xem chi tiết</button>
+          </div>
+        </div>
+
+        <!-- Property Card 5 -->
+        <div class="property-card">
+          <div class="property-image-container">
+            <img src="https://via.placeholder.com/400x225/0D47A1/FFFFFF?text=Căn+hộ+2" alt="Căn hộ" class="property-image" loading="lazy">
+            <div class="price-badge">3.8 tỷ</div>
+            <button class="favorite-btn" aria-label="Lưu tin đăng">♡</button>
+          </div>
+          <div class="property-content">
+            <span class="property-type">Căn hộ</span>
+            <h3 class="property-title">Căn hộ 2PN nội thất đầy đủ giá tốt</h3>
+            <p class="property-location">📍 Quận 7, TP. Hồ Chí Minh</p>
+            <div class="property-stats">
+              <span>🛏️ 2</span>
+              <span>🛁 2</span>
+              <span>📐 85m²</span>
+            </div>
+            <p class="property-description">Nội thất hiện đại, gần trung tâm...</p>
+            <button class="btn-secondary">Xem chi tiết</button>
+          </div>
+        </div>
+
+        <!-- Property Card 6 -->
+        <div class="property-card">
+          <div class="property-image-container">
+            <img src="https://via.placeholder.com/400x225/E53935/FFFFFF?text=Nhà+phố+2" alt="Nhà phố" class="property-image" loading="lazy">
+            <div class="price-badge">6.5 tỷ</div>
+            <button class="favorite-btn" aria-label="Lưu tin đăng">♡</button>
+          </div>
+          <div class="property-content">
+            <span class="property-type">Nhà riêng</span>
+            <h3 class="property-title">Nhà 3 tầng hẻm rộng yên tĩnh</h3>
+            <p class="property-location">📍 Quận 10, TP. Hồ Chí Minh</p>
+            <div class="property-stats">
+              <span>🛏️ 3</span>
+              <span>🛁 2</span>
+              <span>📐 95m²</span>
+            </div>
+            <p class="property-description">Khu dân cư văn minh, an ninh...</p>
+            <button class="btn-secondary">Xem chi tiết</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="page-btn">«</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">4</button>
+        <button class="page-btn">5</button>
+        <button class="page-btn">»</button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a href="/index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>Trang chủ</div>
+    </a>
+    <a href="/listings.html" class="nav-item active">
+      <div class="nav-icon">🔍</div>
+      <div>Tìm kiếm</div>
+    </a>
+    <a href="/saved.html" class="nav-item">
+      <div class="nav-icon">♡</div>
+      <div>Đã lưu</div>
+    </a>
+    <a href="/messages.html" class="nav-item">
+      <div class="nav-icon">💬</div>
+      <div>Tin nhắn</div>
+    </a>
+    <a href="/profile.html" class="nav-item">
+      <div class="nav-icon">👤</div>
+      <div>Tài khoản</div>
+    </a>
+  </nav>
+
+</body>
+</html>

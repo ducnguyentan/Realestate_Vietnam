@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Đăng Tin Bất Động Sản - Sàn Giao Dịch BĐS Việt Nam</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== CSS RESET ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ========== DESIGN TOKENS ========== */
+    :root {
+      --color-primary: #0D47A1;
+      --color-primary-light: #42A5F5;
+      --color-success: #28A745;
+      --color-danger: #E53935;
+      --color-warning: #FF6F61;
+
+      --color-white: #FFFFFF;
+      --color-cream: #F5F5F5;
+      --color-gray-light: #E0E0E0;
+      --color-gray-medium: #9E9E9E;
+      --color-gray-dark: #2C3E50;
+
+      --font-heading: 'Be Vietnam Pro', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+      --transition-base: 0.2s ease;
+      --transition-slow: 0.3s ease;
+    }
+
+    /* ========== BASE STYLES ========== */
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-gray-dark);
+      background: var(--color-cream);
+      margin: 0;
+      padding-bottom: 80px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-white);
+      text-decoration: none;
+    }
+
+    .btn-back {
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--color-white);
+      border: 2px solid var(--color-white);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* ========== FORM CONTAINER ========== */
+    .form-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-md);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--color-gray-dark);
+      margin-bottom: var(--space-md);
+    }
+
+    .page-description {
+      font-size: 16px;
+      color: var(--color-gray-medium);
+      line-height: 1.6;
+    }
+
+    /* ========== FORM SECTIONS ========== */
+    .form-section {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-gray-dark);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 2px solid var(--color-gray-light);
+    }
+
+    /* ========== FORM ELEMENTS ========== */
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-gray-dark);
+      margin-bottom: var(--space-sm);
+    }
+
+    .form-label .required {
+      color: var(--color-danger);
+      margin-left: 4px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      min-height: 48px;
+      border: 2px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--color-gray-dark);
+      background: var(--color-white);
+      transition: var(--transition-base);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--color-primary-light);
+      box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 150px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .form-hint {
+      font-size: 14px;
+      color: var(--color-gray-medium);
+      margin-top: var(--space-sm);
+    }
+
+    /* ========== RADIO BUTTONS ========== */
+    .radio-group {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .radio-option input[type="radio"] {
+      display: none;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+      min-height: 56px;
+      border: 2px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-base);
+      background: var(--color-white);
+    }
+
+    .radio-option input[type="radio"]:checked + .radio-label {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
+    }
+
+    .radio-label:hover {
+      border-color: var(--color-primary-light);
+    }
+
+    /* ========== PHOTO UPLOAD ========== */
+    .photo-upload-zone {
+      border: 3px dashed var(--color-gray-light);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-2xl);
+      text-align: center;
+      background: var(--color-cream);
+      cursor: pointer;
+      transition: var(--transition-base);
+    }
+
+    .photo-upload-zone:hover {
+      border-color: var(--color-primary-light);
+      background: rgba(66, 165, 245, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 64px;
+      margin-bottom: var(--space-md);
+    }
+
+    .upload-text {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--color-gray-dark);
+      margin-bottom: var(--space-sm);
+    }
+
+    .upload-hint {
+      font-size: 14px;
+      color: var(--color-gray-medium);
+    }
+
+    .photo-upload-input {
+      display: none;
+    }
+
+    .photo-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .photo-preview-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      background: var(--color-gray-light);
+    }
+
+    .photo-preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-remove-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 28px;
+      height: 28px;
+      background: var(--color-danger);
+      color: var(--color-white);
+      border: none;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========== TWO COLUMN LAYOUT ========== */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    @media (min-width: 768px) {
+      .form-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .form-row.three-col {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* ========== SUBMIT SECTION ========== */
+    .submit-section {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .submit-info {
+      font-size: 14px;
+      color: var(--color-gray-medium);
+      margin-bottom: var(--space-lg);
+      line-height: 1.6;
+    }
+
+    .submit-actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 14px 32px;
+      min-height: 56px;
+      min-width: 200px;
+      background: var(--color-danger);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--border-radius-md);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-base);
+      font-family: var(--font-body);
+    }
+
+    .btn-primary:hover {
+      background: #C62828;
+      box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+    }
+
+    .btn-secondary {
+      padding: 14px 32px;
+      min-height: 56px;
+      min-width: 200px;
+      background: transparent;
+      color: var(--color-primary-light);
+      border: 2px solid var(--color-primary-light);
+      border-radius: var(--border-radius-md);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-base);
+      font-family: var(--font-body);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-primary-light);
+      color: var(--color-white);
+    }
+
+    /* ========== BOTTOM NAVIGATION ========== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      z-index: 1000;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 16px;
+      min-width: 48px;
+      color: var(--color-gray-medium);
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .nav-item.active {
+      color: var(--color-primary);
+    }
+
+    .nav-icon {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    @media (min-width: 768px) {
+      .bottom-nav {
+        display: none;
+      }
+
+      body {
+        padding-bottom: 0;
+      }
+    }
+
+    /* ========== PRICE INPUT ========== */
+    .price-input-group {
+      position: relative;
+    }
+
+    .price-input-group .form-input {
+      padding-right: 80px;
+    }
+
+    .price-unit {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 500;
+      color: var(--color-gray-medium);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="/seller-dashboard.html" class="btn-back">← Quay lại</a>
+      <a href="/index.html" class="logo">🏠 BĐS Việt Nam</a>
+    </div>
+  </header>
+
+  <!-- Form Container -->
+  <div class="form-container">
+
+    <!-- Form Header -->
+    <div class="form-header">
+      <h1 class="page-title">Đăng Tin Bất Động Sản</h1>
+      <p class="page-description">Điền thông tin chi tiết để thu hút khách hàng tiềm năng</p>
+    </div>
+
+    <form>
+
+      <!-- Section 1: Transaction Type -->
+      <section class="form-section">
+        <h2 class="section-title">1. Loại giao dịch</h2>
+
+        <div class="form-group">
+          <label class="form-label">Bạn muốn <span class="required">*</span></label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="sell" name="transaction-type" value="sell" checked>
+              <label for="sell" class="radio-label">🏷️ Bán</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="rent" name="transaction-type" value="rent">
+              <label for="rent" class="radio-label">🔑 Cho thuê</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Property Type -->
+      <section class="form-section">
+        <h2 class="section-title">2. Loại bất động sản</h2>
+
+        <div class="form-group">
+          <label for="property-type" class="form-label">Loại hình <span class="required">*</span></label>
+          <select id="property-type" class="form-select" required>
+            <option value="">Chọn loại bất động sản</option>
+            <option value="apartment">Căn hộ / Chung cư</option>
+            <option value="house">Nhà riêng</option>
+            <option value="villa">Biệt thự</option>
+            <option value="land">Đất nền</option>
+            <option value="townhouse">Nhà phố</option>
+            <option value="commercial">Bất động sản thương mại</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Section 3: Location -->
+      <section class="form-section">
+        <h2 class="section-title">3. Địa chỉ</h2>
+
+        <div class="form-group">
+          <label for="address" class="form-label">Địa chỉ chi tiết <span class="required">*</span></label>
+          <input
+            type="text"
+            id="address"
+            class="form-input"
+            placeholder="Ví dụ: 123 Nguyễn Huệ, Phường Bến Nghé"
+            required
+          >
+          <p class="form-hint">💡 Gợi ý: Sử dụng tính năng tự động hoàn thành địa chỉ (Goong API)</p>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="district" class="form-label">Quận/Huyện <span class="required">*</span></label>
+            <select id="district" class="form-select" required>
+              <option value="">Chọn quận/huyện</option>
+              <option value="q1">Quận 1</option>
+              <option value="q2">Quận 2</option>
+              <option value="q3">Quận 3</option>
+              <option value="q7">Quận 7</option>
+              <option value="thu-duc">Thủ Đức</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="city" class="form-label">Tỉnh/Thành phố <span class="required">*</span></label>
+            <select id="city" class="form-select" required>
+              <option value="">Chọn tỉnh/thành phố</option>
+              <option value="hcm">TP. Hồ Chí Minh</option>
+              <option value="hanoi">Hà Nội</option>
+              <option value="danang">Đà Nẵng</option>
+              <option value="cantho">Cần Thơ</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Property Details -->
+      <section class="form-section">
+        <h2 class="section-title">4. Thông tin chi tiết</h2>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="bedrooms" class="form-label">Số phòng ngủ <span class="required">*</span></label>
+            <select id="bedrooms" class="form-select" required>
+              <option value="">Chọn</option>
+              <option value="1">1 phòng</option>
+              <option value="2">2 phòng</option>
+              <option value="3">3 phòng</option>
+              <option value="4">4 phòng</option>
+              <option value="5+">5+ phòng</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="bathrooms" class="form-label">Số phòng tắm <span class="required">*</span></label>
+            <select id="bathrooms" class="form-select" required>
+              <option value="">Chọn</option>
+              <option value="1">1 phòng</option>
+              <option value="2">2 phòng</option>
+              <option value="3">3 phòng</option>
+              <option value="4+">4+ phòng</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="area" class="form-label">Diện tích (m²) <span class="required">*</span></label>
+            <input
+              type="number"
+              id="area"
+              class="form-input"
+              placeholder="Ví dụ: 120"
+              min="1"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="direction" class="form-label">Hướng nhà</label>
+          <select id="direction" class="form-select">
+            <option value="">Chọn hướng</option>
+            <option value="dong">Đông</option>
+            <option value="tay">Tây</option>
+            <option value="nam">Nam</option>
+            <option value="bac">Bắc</option>
+            <option value="dong-nam">Đông Nam</option>
+            <option value="dong-bac">Đông Bắc</option>
+            <option value="tay-nam">Tây Nam</option>
+            <option value="tay-bac">Tây Bắc</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Section 5: Photos -->
+      <section class="form-section">
+        <h2 class="section-title">5. Hình ảnh</h2>
+
+        <div class="form-group">
+          <label class="form-label">Tải lên hình ảnh <span class="required">*</span></label>
+
+          <label for="photo-upload" class="photo-upload-zone">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Kéo thả hoặc nhấp để tải ảnh lên</div>
+            <div class="upload-hint">PNG, JPG, WEBP (Tối đa 10MB mỗi ảnh, tối thiểu 3 ảnh)</div>
+          </label>
+
+          <input
+            type="file"
+            id="photo-upload"
+            class="photo-upload-input"
+            accept="image/*"
+            multiple
+          >
+
+          <!-- Preview Grid (populated via JavaScript) -->
+          <div class="photo-preview-grid" style="display: none;">
+            <div class="photo-preview-item">
+              <img src="https://via.placeholder.com/120/42A5F5/FFFFFF?text=1" alt="Preview" class="photo-preview-img">
+              <button type="button" class="photo-remove-btn">×</button>
+            </div>
+            <div class="photo-preview-item">
+              <img src="https://via.placeholder.com/120/28A745/FFFFFF?text=2" alt="Preview" class="photo-preview-img">
+              <button type="button" class="photo-remove-btn">×</button>
+            </div>
+            <div class="photo-preview-item">
+              <img src="https://via.placeholder.com/120/C5A880/FFFFFF?text=3" alt="Preview" class="photo-preview-img">
+              <button type="button" class="photo-remove-btn">×</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Price -->
+      <section class="form-section">
+        <h2 class="section-title">6. Giá</h2>
+
+        <div class="form-group">
+          <label for="price" class="form-label">Mức giá <span class="required">*</span></label>
+          <div class="price-input-group">
+            <input
+              type="number"
+              id="price"
+              class="form-input"
+              placeholder="Ví dụ: 5200000000"
+              min="0"
+              step="100000"
+              required
+            >
+            <span class="price-unit">VND</span>
+          </div>
+          <p class="form-hint">💡 Gợi ý: Giá thị trường cho khu vực này: 40-50 triệu/m²</p>
+        </div>
+      </section>
+
+      <!-- Section 7: Description -->
+      <section class="form-section">
+        <h2 class="section-title">7. Mô tả</h2>
+
+        <div class="form-group">
+          <label for="title" class="form-label">Tiêu đề tin đăng <span class="required">*</span></label>
+          <input
+            type="text"
+            id="title"
+            class="form-input"
+            placeholder="Ví dụ: Căn hộ cao cấp view sông Sài Gòn tuyệt đẹp"
+            maxlength="100"
+            required
+          >
+          <p class="form-hint">Tối đa 100 ký tự</p>
+        </div>
+
+        <div class="form-group">
+          <label for="description" class="form-label">Mô tả chi tiết <span class="required">*</span></label>
+          <textarea
+            id="description"
+            class="form-textarea"
+            placeholder="Mô tả chi tiết về bất động sản của bạn...&#10;&#10;Ví dụ:&#10;- Vị trí đắc địa ngay trung tâm&#10;- Nội thất cao cấp nhập khẩu&#10;- View sông tuyệt đẹp&#10;- An ninh 24/7&#10;- Sổ hồng riêng, pháp lý rõ ràng"
+            minlength="50"
+            required
+          ></textarea>
+          <p class="form-hint">Tối thiểu 50 ký tự. Mô tả càng chi tiết càng tốt!</p>
+        </div>
+      </section>
+
+      <!-- Submit Section -->
+      <section class="submit-section">
+        <p class="submit-info">
+          Tin đăng của bạn sẽ được kiểm duyệt trong vòng 24 giờ.<br>
+          Sau khi được duyệt, tin đăng sẽ xuất hiện trên trang chủ và kết quả tìm kiếm.
+        </p>
+
+        <div class="submit-actions">
+          <button type="button" class="btn-secondary">💾 Lưu nháp</button>
+          <button type="submit" class="btn-primary">📤 Đăng tin</button>
+        </div>
+      </section>
+
+    </form>
+
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a href="/index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>Trang chủ</div>
+    </a>
+    <a href="/listings.html" class="nav-item">
+      <div class="nav-icon">🔍</div>
+      <div>Tìm kiếm</div>
+    </a>
+    <a href="/saved.html" class="nav-item">
+      <div class="nav-icon">♡</div>
+      <div>Đã lưu</div>
+    </a>
+    <a href="/messages.html" class="nav-item">
+      <div class="nav-icon">💬</div>
+      <div>Tin nhắn</div>
+    </a>
+    <a href="/profile.html" class="nav-item active">
+      <div class="nav-icon">👤</div>
+      <div>Tài khoản</div>
+    </a>
+  </nav>
+
+</body>
+</html>

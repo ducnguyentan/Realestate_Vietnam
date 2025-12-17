@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Dashboard Người Bán - Sàn Giao Dịch BĐS Việt Nam</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== CSS RESET ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ========== DESIGN TOKENS ========== */
+    :root {
+      --color-primary: #0D47A1;
+      --color-primary-light: #42A5F5;
+      --color-success: #28A745;
+      --color-danger: #E53935;
+      --color-warning: #FF6F61;
+      --color-gold: #C5A880;
+
+      --color-white: #FFFFFF;
+      --color-cream: #F5F5F5;
+      --color-gray-light: #E0E0E0;
+      --color-gray-medium: #9E9E9E;
+      --color-gray-dark: #2C3E50;
+
+      --font-heading: 'Be Vietnam Pro', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+      --transition-base: 0.2s ease;
+      --transition-slow: 0.3s ease;
+    }
+
+    /* ========== BASE STYLES ========== */
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-gray-dark);
+      background: var(--color-cream);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-white);
+      text-decoration: none;
+    }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--color-white);
+    }
+
+    /* ========== LAYOUT ========== */
+    .dashboard-layout {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      width: 280px;
+      background: var(--color-white);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .nav-item {
+      margin-bottom: var(--space-sm);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      color: var(--color-gray-dark);
+      text-decoration: none;
+      border-radius: var(--border-radius-md);
+      transition: var(--transition-base);
+      font-size: 16px;
+      font-weight: 500;
+      min-height: 48px;
+    }
+
+    .nav-link:hover {
+      background: var(--color-cream);
+    }
+
+    .nav-link.active {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main-content {
+      flex: 1;
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-gray-dark);
+    }
+
+    .btn-primary {
+      padding: 12px 24px;
+      min-height: 48px;
+      background: var(--color-danger);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--border-radius-md);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-base);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .btn-primary:hover {
+      background: #C62828;
+      box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+    }
+
+    /* ========== STATS CARDS ========== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .stat-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      transition: var(--transition-slow);
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--border-radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.blue {
+      background: rgba(66, 165, 245, 0.1);
+    }
+
+    .stat-icon.green {
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .stat-icon.orange {
+      background: rgba(255, 111, 97, 0.1);
+    }
+
+    .stat-icon.gold {
+      background: rgba(197, 168, 128, 0.1);
+    }
+
+    .stat-content {
+      flex: 1;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--color-gray-medium);
+      margin-bottom: var(--space-xs);
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--color-gray-dark);
+    }
+
+    .stat-change {
+      font-size: 14px;
+      margin-top: var(--space-xs);
+    }
+
+    .stat-change.positive {
+      color: var(--color-success);
+    }
+
+    /* ========== LISTINGS TABLE ========== */
+    .listings-section {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-gray-dark);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .filter-tab {
+      padding: 8px 16px;
+      background: transparent;
+      border: 2px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-gray-dark);
+      cursor: pointer;
+      transition: var(--transition-base);
+      min-height: 40px;
+    }
+
+    .filter-tab.active {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
+    }
+
+    /* ========== TABLE (Desktop) ========== */
+    .listings-table {
+      width: 100%;
+      border-collapse: collapse;
+      display: none;
+    }
+
+    .listings-table thead {
+      background: var(--color-cream);
+    }
+
+    .listings-table th {
+      text-align: left;
+      padding: var(--space-md);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-gray-dark);
+      border-bottom: 2px solid var(--color-gray-light);
+    }
+
+    .listings-table td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--color-gray-light);
+      font-size: 14px;
+    }
+
+    .listings-table tr:hover {
+      background: var(--color-cream);
+    }
+
+    .listing-title-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .listing-thumbnail {
+      width: 80px;
+      height: 60px;
+      border-radius: var(--border-radius-md);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .listing-title {
+      font-weight: 500;
+      color: var(--color-gray-dark);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-badge.active {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--color-success);
+    }
+
+    .status-badge.pending {
+      background: rgba(255, 111, 97, 0.1);
+      color: var(--color-warning);
+    }
+
+    .status-badge.sold {
+      background: rgba(158, 158, 158, 0.1);
+      color: var(--color-gray-medium);
+    }
+
+    .action-btns {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      background: transparent;
+      border: 1px solid var(--color-gray-light);
+      border-radius: var(--border-radius-md);
+      cursor: pointer;
+      font-size: 16px;
+      transition: var(--transition-base);
+    }
+
+    .btn-icon:hover {
+      background: var(--color-cream);
+    }
+
+    /* ========== MOBILE LISTING CARDS ========== */
+    .listings-mobile {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .listing-card {
+      background: var(--color-cream);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-md);
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .listing-card-thumbnail {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--border-radius-md);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .listing-card-content {
+      flex: 1;
+    }
+
+    .listing-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+      line-height: 1.4;
+    }
+
+    .listing-card-meta {
+      font-size: 14px;
+      color: var(--color-gray-medium);
+      margin-bottom: var(--space-sm);
+    }
+
+    .listing-card-stats {
+      display: flex;
+      gap: var(--space-md);
+      font-size: 14px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .listing-card-actions {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      min-height: 36px;
+      font-size: 14px;
+      border-radius: var(--border-radius-md);
+      cursor: pointer;
+      transition: var(--transition-base);
+      border: 1px solid var(--color-gray-light);
+      background: var(--color-white);
+    }
+
+    /* ========== MOBILE BOTTOM NAV ========== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      z-index: 1000;
+    }
+
+    .nav-item-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 16px;
+      color: var(--color-gray-medium);
+      text-decoration: none;
+      font-size: 12px;
+      transition: var(--transition-base);
+      min-width: 48px;
+    }
+
+    .nav-item-bottom.active {
+      color: var(--color-primary);
+    }
+
+    .nav-icon-bottom {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    /* ========== RESPONSIVE DESIGN ========== */
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .listings-table {
+        display: table;
+      }
+
+      .listings-mobile {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .sidebar {
+        display: block;
+      }
+
+      .main-content {
+        padding: var(--space-xl);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .bottom-nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 767px) {
+      body {
+        padding-bottom: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="/index.html" class="logo">🏠 BĐS Việt Nam</a>
+      <div class="header-user">
+        <span>Nguyễn Văn A</span>
+        <img src="https://via.placeholder.com/40/42A5F5/FFFFFF?text=U" alt="User avatar" class="user-avatar">
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Layout -->
+  <div class="dashboard-layout">
+
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="sidebar">
+      <ul class="sidebar-nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link active">
+            <span class="nav-icon">📊</span>
+            <span>Tổng quan</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon">📝</span>
+            <span>Tin đăng của tôi</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/create-listing.html" class="nav-link">
+            <span class="nav-icon">➕</span>
+            <span>Đăng tin mới</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon">💬</span>
+            <span>Tin nhắn</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon">⭐</span>
+            <span>Đánh giá</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon">⚙️</span>
+            <span>Cài đặt</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <a href="/create-listing.html" class="btn-primary">
+          ➕ Đăng tin mới
+        </a>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">👁️</div>
+          <div class="stat-content">
+            <div class="stat-label">Lượt xem</div>
+            <div class="stat-value">12,458</div>
+            <div class="stat-change positive">↑ 12% so với tháng trước</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">📞</div>
+          <div class="stat-content">
+            <div class="stat-label">Liên hệ</div>
+            <div class="stat-value">342</div>
+            <div class="stat-change positive">↑ 8% so với tháng trước</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon orange">📝</div>
+          <div class="stat-content">
+            <div class="stat-label">Tin đăng hoạt động</div>
+            <div class="stat-value">24</div>
+            <div class="stat-change">/ 30 tin tối đa</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon gold">✓</div>
+          <div class="stat-content">
+            <div class="stat-label">Giao dịch thành công</div>
+            <div class="stat-value">18</div>
+            <div class="stat-change positive">↑ 3 giao dịch mới</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listings Section -->
+      <div class="listings-section">
+        <div class="section-header">
+          <h2 class="section-title">Tin Đăng Của Tôi</h2>
+          <div class="filter-tabs">
+            <button class="filter-tab active">Tất cả</button>
+            <button class="filter-tab">Đang hoạt động</button>
+            <button class="filter-tab">Chờ duyệt</button>
+            <button class="filter-tab">Đã bán</button>
+          </div>
+        </div>
+
+        <!-- Desktop Table View -->
+        <table class="listings-table">
+          <thead>
+            <tr>
+              <th>Tiêu đề</th>
+              <th>Trạng thái</th>
+              <th>Lượt xem</th>
+              <th>Ngày đăng</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="listing-title-cell">
+                  <img src="https://via.placeholder.com/80x60/42A5F5/FFFFFF?text=1" alt="Listing" class="listing-thumbnail">
+                  <div class="listing-title">Căn hộ cao cấp view sông Sài Gòn</div>
+                </div>
+              </td>
+              <td><span class="status-badge active">Đang hoạt động</span></td>
+              <td>1,248</td>
+              <td>15/12/2025</td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-icon" title="Xem">👁️</button>
+                  <button class="btn-icon" title="Sửa">✏️</button>
+                  <button class="btn-icon" title="Xóa">🗑️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="listing-title-cell">
+                  <img src="https://via.placeholder.com/80x60/28A745/FFFFFF?text=2" alt="Listing" class="listing-thumbnail">
+                  <div class="listing-title">Nhà phố 4 tầng mặt tiền đường lớn</div>
+                </div>
+              </td>
+              <td><span class="status-badge active">Đang hoạt động</span></td>
+              <td>892</td>
+              <td>12/12/2025</td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-icon" title="Xem">👁️</button>
+                  <button class="btn-icon" title="Sửa">✏️</button>
+                  <button class="btn-icon" title="Xóa">🗑️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="listing-title-cell">
+                  <img src="https://via.placeholder.com/80x60/C5A880/FFFFFF?text=3" alt="Listing" class="listing-thumbnail">
+                  <div class="listing-title">Biệt thự sang trọng khu compound</div>
+                </div>
+              </td>
+              <td><span class="status-badge pending">Chờ duyệt</span></td>
+              <td>0</td>
+              <td>16/12/2025</td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-icon" title="Xem">👁️</button>
+                  <button class="btn-icon" title="Sửa">✏️</button>
+                  <button class="btn-icon" title="Xóa">🗑️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="listing-title-cell">
+                  <img src="https://via.placeholder.com/80x60/FF6F61/FFFFFF?text=4" alt="Listing" class="listing-thumbnail">
+                  <div class="listing-title">Đất nền KDC cao cấp sổ hồng riêng</div>
+                </div>
+              </td>
+              <td><span class="status-badge sold">Đã bán</span></td>
+              <td>2,156</td>
+              <td>01/12/2025</td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-icon" title="Xem">👁️</button>
+                  <button class="btn-icon" title="Xóa">🗑️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="listing-title-cell">
+                  <img src="https://via.placeholder.com/80x60/0D47A1/FFFFFF?text=5" alt="Listing" class="listing-thumbnail">
+                  <div class="listing-title">Căn hộ 2PN nội thất đầy đủ</div>
+                </div>
+              </td>
+              <td><span class="status-badge active">Đang hoạt động</span></td>
+              <td>567</td>
+              <td>10/12/2025</td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-icon" title="Xem">👁️</button>
+                  <button class="btn-icon" title="Sửa">✏️</button>
+                  <button class="btn-icon" title="Xóa">🗑️</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Mobile Card View -->
+        <div class="listings-mobile">
+          <div class="listing-card">
+            <img src="https://via.placeholder.com/100/42A5F5/FFFFFF?text=1" alt="Listing" class="listing-card-thumbnail">
+            <div class="listing-card-content">
+              <h3 class="listing-card-title">Căn hộ cao cấp view sông Sài Gòn</h3>
+              <div class="listing-card-meta">
+                <span class="status-badge active">Đang hoạt động</span>
+              </div>
+              <div class="listing-card-stats">
+                <span>👁️ 1,248</span>
+                <span>📅 15/12/2025</span>
+              </div>
+              <div class="listing-card-actions">
+                <button class="btn-small">Xem</button>
+                <button class="btn-small">Sửa</button>
+                <button class="btn-small">Xóa</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="listing-card">
+            <img src="https://via.placeholder.com/100/28A745/FFFFFF?text=2" alt="Listing" class="listing-card-thumbnail">
+            <div class="listing-card-content">
+              <h3 class="listing-card-title">Nhà phố 4 tầng mặt tiền đường lớn</h3>
+              <div class="listing-card-meta">
+                <span class="status-badge active">Đang hoạt động</span>
+              </div>
+              <div class="listing-card-stats">
+                <span>👁️ 892</span>
+                <span>📅 12/12/2025</span>
+              </div>
+              <div class="listing-card-actions">
+                <button class="btn-small">Xem</button>
+                <button class="btn-small">Sửa</button>
+                <button class="btn-small">Xóa</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="listing-card">
+            <img src="https://via.placeholder.com/100/C5A880/FFFFFF?text=3" alt="Listing" class="listing-card-thumbnail">
+            <div class="listing-card-content">
+              <h3 class="listing-card-title">Biệt thự sang trọng khu compound</h3>
+              <div class="listing-card-meta">
+                <span class="status-badge pending">Chờ duyệt</span>
+              </div>
+              <div class="listing-card-stats">
+                <span>👁️ 0</span>
+                <span>📅 16/12/2025</span>
+              </div>
+              <div class="listing-card-actions">
+                <button class="btn-small">Xem</button>
+                <button class="btn-small">Sửa</button>
+                <button class="btn-small">Xóa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="Dashboard navigation">
+    <a href="#" class="nav-item-bottom active">
+      <div class="nav-icon-bottom">📊</div>
+      <div>Tổng quan</div>
+    </a>
+    <a href="#" class="nav-item-bottom">
+      <div class="nav-icon-bottom">📝</div>
+      <div>Tin đăng</div>
+    </a>
+    <a href="#" class="nav-item-bottom">
+      <div class="nav-icon-bottom">💬</div>
+      <div>Tin nhắn</div>
+    </a>
+    <a href="#" class="nav-item-bottom">
+      <div class="nav-icon-bottom">👤</div>
+      <div>Tài khoản</div>
+    </a>
+  </nav>
+
+</body>
+</html>
