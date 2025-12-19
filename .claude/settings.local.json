@@ -31,7 +31,13 @@
       "Bash(pnpm:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(if exist nul del nul)"
+      "Bash(if exist nul del nul)",
+      "Bash(python:*)",
+      "Bash(wc:*)",
+      "Bash(mkdir:*)",
+      "Bash(__NEW_LINE__ printf \"# Frontend Application Analysis Report\\n\\n\")",
+      "Bash(__NEW_LINE__ wc -l \"/c/Users/Admin/Realestate_Vietnam/Realestate_Vietnam/plans/reports/scout-frontend-analysis-2025-12-18.md\")",
+      "Bash(npx repomix:*)"
     ]
   }
 }

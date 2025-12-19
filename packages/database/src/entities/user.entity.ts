@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  OneToMany,
-  OneToOne,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, OneToMany, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { UserRole } from './user-role.entity';
 import { Agent } from './agent.entity';
@@ -59,6 +52,18 @@ export class User extends BaseEntity {
 
   @Column({ name: 'identity_verified', type: 'boolean', default: false })
   identityVerified: boolean = false;
+
+  @Column({ name: 'identity_verified_at', type: 'timestamptz', nullable: true })
+  identityVerifiedAt: Date | null = null;
+
+  @Column({ name: 'id_front_image', type: 'varchar', length: 500, nullable: true })
+  idFrontImage: string | null = null;
+
+  @Column({ name: 'id_back_image', type: 'varchar', length: 500, nullable: true })
+  idBackImage: string | null = null;
+
+  @Column({ name: 'id_selfie_image', type: 'varchar', length: 500, nullable: true })
+  idSelfieImage: string | null = null;
 
   @Column({ name: 'last_login_at', type: 'timestamptz', nullable: true })
   lastLoginAt: Date | null = null;
