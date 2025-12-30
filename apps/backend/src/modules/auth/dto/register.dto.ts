@@ -5,7 +5,13 @@ import {
   IsString,
   Matches,
   MinLength,
+  IsEnum,
 } from 'class-validator';
+
+export enum UserType {
+  PARTNER = 'partner',
+  BUYER = 'buyer',
+}
 
 export class RegisterDto {
   @IsOptional()
@@ -27,6 +33,12 @@ export class RegisterDto {
   @IsString()
   @MinLength(2)
   fullName: string = '';
+
+  @IsNotEmpty()
+  @IsEnum(UserType, {
+    message: 'User type must be either "partner" or "buyer"',
+  })
+  userType: UserType = UserType.BUYER;
 
   validate() {
     if (!this.phone && !this.email) {

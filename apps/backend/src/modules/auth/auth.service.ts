@@ -61,6 +61,9 @@ export class AuthService {
       phoneVerified: false,
       emailVerified: false,
       status: 'active',
+      settings: {
+        userType: registerDto.userType || 'buyer',
+      },
     });
 
     await this.userRepository.save(user);

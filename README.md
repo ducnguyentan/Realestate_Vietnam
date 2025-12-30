@@ -77,10 +77,15 @@ pnpm run dev
 ### Authentication & Users
 
 - JWT-based authentication (15m access, 30d refresh)
+- Dual user types: **Partner** (Đăng ký BĐS - List properties) and **Buyer** (Tìm kiếm BĐS - Search properties)
+- Registration with user type selection and avatar upload
+- Login with email/phone support
 - OTP verification (mock for MVP)
-- User profile management
+- Protected dashboards by user type
+- User profile management with avatar
 - KYC (Know Your Customer) verification
 - Role-based access control (7 roles)
+- **IMPORTANT**: See [Security Critical Actions](./SECURITY_CRITICAL_ACTIONS.md) before production deployment
 
 ### Property Listings
 
@@ -104,9 +109,16 @@ pnpm run dev
 
 ## API Endpoints
 
-**Authentication** (7 endpoints):
+**Authentication** (8 endpoints):
 
-- `POST /auth/register`, `/auth/login`, `/auth/refresh`, `/auth/verify-otp`, `/auth/logout`, `/auth/me`, `/auth/validate`
+- `POST /auth/register` - Register with email/phone + user type
+- `POST /auth/login` - Login with credentials
+- `POST /auth/refresh` - Refresh token pair
+- `POST /auth/verify-otp` - Verify OTP for registration
+- `POST /auth/logout` - Logout (invalidate tokens)
+- `GET /auth/me` - Get current user profile
+- `POST /auth/validate` - Validate token
+- `POST /auth/upload-avatar` - Upload user avatar to S3
 
 **Users** (6 endpoints):
 
@@ -248,18 +260,32 @@ See [`docs/project-roadmap.md`](./docs/project-roadmap.md) for full roadmap.
 
 ### API Security
 
-- JWT token authentication
-- Role-based access control
+- JWT token authentication with short-lived access tokens (15m)
+- Role-based access control (RBAC)
 - CORS configured
 - SQL injection prevention (TypeORM parameterized queries)
-- Rate limiting (planned)
+- Rate limiting (planned for auth endpoints)
+- Avatar upload via S3 (signed URLs)
 
 ### Data Protection
 
 - Soft deletes for audit trail
 - Foreign key constraints
-- Input validation on all endpoints
+- Input validation on all endpoints (Zod + class-validator)
 - Sensitive data never logged
+- User type stored in settings for role differentiation
+
+### Critical Security Actions Required
+
+**⚠️ IMPORTANT: Before production deployment, review and implement fixes in [SECURITY_CRITICAL_ACTIONS.md](./SECURITY_CRITICAL_ACTIONS.md)**:
+
+- Migrate tokens from localStorage to httpOnly cookies (4-6 hours)
+- Implement rate limiting on /auth/login and /auth/register (1-2 hours)
+- Rotate JWT_SECRET and AWS S3 credentials
+- Remove secrets from git history
+- Add password complexity validation
+
+See detailed implementation guide and timeline in [SECURITY_CRITICAL_ACTIONS.md](./SECURITY_CRITICAL_ACTIONS.md).
 
 ## Contributing
 
@@ -293,7 +319,8 @@ MIT
 
 ---
 
-**Last Updated**: 2025-12-18
+**Last Updated**: 2025-12-30
 **Current Phase**: Phase 0 Complete → Phase 1 In Progress
 **Phase 0 Status**: ✅ Infrastructure & Frontend Complete
-**Next Review**: 2025-12-25
+**Phase 1 Status**: 🔄 Authentication System 100% Complete (Security hardening pending)
+**Next Review**: 2026-01-10

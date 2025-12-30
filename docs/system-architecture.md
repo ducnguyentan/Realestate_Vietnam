@@ -139,23 +139,29 @@ AppModule (Root)
 #### Authentication Flow
 
 ```
-User Input (Email/Password)
+User Input (Email/Password + UserType)
          ↓
-AuthController.login()
+AuthController.register() or AuthController.login()
          ↓
 AuthService.validateCredentials()
-  ├─ Find user by email
+  ├─ Find user by email or phone
   ├─ Compare password (bcrypt)
+  ├─ Retrieve userType from user.settings
   └─ Return user if valid
          ↓
 TokenService.generateTokenPair()
-  ├─ Create JWT (15min expiry)
+  ├─ Create JWT (15min expiry, includes userType)
   ├─ Create Refresh Token (30d expiry)
   └─ Return both tokens
          ↓
 Frontend stores tokens
   ├─ Access Token → Memory (auto-cleared on refresh)
-  ├─ Refresh Token → localStorage or secure cookie
+  ├─ Refresh Token → localStorage (migrate to httpOnly cookie)
+  └─ AuthContext updated with user + userType
+         ↓
+ProtectedRoute component checks userType
+  ├─ User type matches? → Allow access
+  └─ Type mismatch? → Redirect to correct dashboard
 ```
 
 #### JWT Token Structure
@@ -167,6 +173,8 @@ Frontend stores tokens
   "sub": "user-uuid",
   "email": "user@example.com",
   "roles": ["Seller"],
+  "userType": "partner",
+  "fullName": "Nguyễn Văn A",
   "iat": 1702900000,
   "exp": 1702900900
 }
@@ -178,10 +186,21 @@ Frontend stores tokens
 {
   "sub": "user-uuid",
   "type": "refresh",
+  "userType": "partner",
   "iat": 1702900000,
   "exp": 1705492000
 }
 ```
+
+**Token Claims**:
+
+- `sub`: User UUID
+- `email`: User email address
+- `roles`: Array of role names (Seller, Buyer, Agent, etc.)
+- `userType`: Either "partner" (list properties) or "buyer" (search properties)
+- `fullName`: User's full name
+- `iat`: Issued at timestamp
+- `exp`: Expiration timestamp
 
 ### Frontend Architecture (Next.js 14)
 
@@ -189,40 +208,86 @@ Frontend stores tokens
 
 ```
 src/app/
-├── layout.tsx              # Root layout with providers
-├── page.tsx               # Home page (placeholder)
-├── globals.css            # Global styles
-├── (auth)/               # Auth routes
+├── layout.tsx                      # Root layout with providers + AuthProvider
+├── page.tsx                        # Home/landing page
+├── globals.css                     # Global styles
+│
+├── (auth)/                         # Public auth routes
 │   ├── login/
-│   │   └── page.tsx
-│   └── register/
-│       └── page.tsx
-├── (app)/                # Protected routes
+│   │   └── page.tsx               # Login form
+│   ├── register/
+│   │   └── page.tsx               # Registration (user type selector)
+│   └── otp-verify/
+│       └── page.tsx               # OTP verification
+│
+├── (app)/                          # Protected routes (requires auth)
 │   ├── dashboard/
-│   │   └── page.tsx
+│   │   ├── partner/
+│   │   │   ├── page.tsx           # Partner dashboard (list properties)
+│   │   │   ├── listings/
+│   │   │   └── leads/
+│   │   └── buyer/
+│   │       ├── page.tsx           # Buyer dashboard (search properties)
+│   │       ├── search/
+│   │       └── favorites/
+│   │
+│   ├── profile/
+│   │   └── page.tsx               # User profile + avatar upload
+│   │
 │   ├── listings/
-│   │   ├── page.tsx
-│   │   └── [id]/page.tsx
-│   └── profile/
+│   │   ├── page.tsx               # Property list view
+│   │   └── [id]/page.tsx          # Property detail view
+│   │
+│   └── upload-test/               # File upload testing (Phase 1)
 │       └── page.tsx
 ```
+
+**Key Structure**:
+
+- `(auth)` group: Public routes for unauthenticated users
+- `(app)` group: Protected routes requiring JwtAuthGuard + ProtectedRoute
+- `dashboard/{userType}`: Separated by user type (partner vs buyer)
+- Routes wrapped in `ProtectedRoute(requiredUserType: 'partner'|'buyer')`
 
 #### Component Organization
 
 ```
 src/
 ├── components/
-│   ├── ui/              # Basic UI (Button, Input, Card)
-│   ├── layout/          # Layout (Header, Footer, Sidebar)
-│   ├── auth/            # Auth components
-│   ├── listings/        # Listing components
-│   └── common/          # Shared components
-├── hooks/               # Custom React hooks
-├── lib/                 # Utilities
-│   ├── api.ts          # API client
-│   ├── providers.tsx   # Context providers
-│   └── utils.ts        # Helper functions
-└── types/              # TypeScript definitions
+│   ├── ui/                          # Basic UI components
+│   │   ├── button.tsx
+│   │   ├── input.tsx
+│   │   └── card.tsx
+│   ├── layout/                      # Layout components
+│   │   ├── Header.tsx               # Navigation header (sticky)
+│   │   └── Footer.tsx               # Footer with links
+│   ├── auth/                        # Authentication components
+│   │   ├── ProtectedRoute.tsx       # Route protection wrapper
+│   │   ├── LoginForm.tsx            # Login form component
+│   │   └── RegisterForm.tsx         # Registration form with user type
+│   ├── listings/                    # Listing-related components
+│   │   ├── PropertyCard.tsx         # Single property card
+│   │   └── PropertyList.tsx         # List of properties
+│   └── common/                      # Shared components
+│       ├── LoadingSpinner.tsx
+│       └── ErrorBoundary.tsx
+│
+├── contexts/
+│   └── AuthContext.tsx              # Auth state + provider (useAuth hook)
+│
+├── services/
+│   ├── auth.service.ts              # Auth API client
+│   └── api.client.ts                # Generic API client with token handling
+│
+├── hooks/                           # Custom React hooks
+│   └── useAuth.ts                   # Auth context hook
+│
+├── lib/                             # Utilities
+│   ├── providers.tsx                # Root providers (AuthProvider, etc.)
+│   └── utils.ts                     # Helper functions
+│
+└── types/                           # TypeScript definitions
+    └── auth.ts                      # Auth interfaces (User, AuthResponse, etc.)
 ```
 
 #### State Management Pattern

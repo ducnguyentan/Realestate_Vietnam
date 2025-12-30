@@ -37,7 +37,10 @@
       "Bash(mkdir:*)",
       "Bash(__NEW_LINE__ printf \"# Frontend Application Analysis Report\\n\\n\")",
       "Bash(__NEW_LINE__ wc -l \"/c/Users/Admin/Realestate_Vietnam/Realestate_Vietnam/plans/reports/scout-frontend-analysis-2025-12-18.md\")",
-      "Bash(npx repomix:*)"
+      "Bash(npx repomix:*)",
+      "Bash(git push:*)",
+      "Bash(grep:*)",
+      "Bash(repomix:*)"
     ]
   }
 }

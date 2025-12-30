@@ -1,11 +1,11 @@
 # Codebase Summary
 
 **Project**: Realestate_Vietnam - Vietnamese Real Estate Marketplace Platform
-**Status**: MVP1 Phase - Core infrastructure and auth system complete
-**Last Updated**: 2025-12-18 (Phase 0 Complete)
-**Frontend Status**: Phase 0 complete (Header, Footer, PropertyCard, Landing page)
-**Backend Status**: MVP1 backend complete (Auth, Users, Listings with 33 tests passing)
-**Overall Status**: Phase 1 in progress
+**Status**: MVP1 Phase - Authentication system 100% complete
+**Last Updated**: 2025-12-30 (Auth Implementation Complete)
+**Frontend Status**: Phase 0 complete + Authentication UI (Login, Register, Protected Routes, Dashboards)
+**Backend Status**: MVP1 complete (Auth, Users, Listings with 33 tests passing)
+**Overall Status**: Phase 1 Authentication ✅ Complete, Security hardening required
 
 ## Overview
 
@@ -108,15 +108,24 @@ realestate_vietnam/
 - `jwt.strategy.ts`: Passport JWT strategy
 - `local.strategy.ts`: Local strategy for email/password
 
-**Endpoints** (7):
+**Key Features**:
 
-- `POST /auth/register` - Register new user
-- `POST /auth/login` - User login
+- User type support: Partner (Đăng ký BĐS) vs Buyer (Tìm kiếm BĐS)
+- UserType enum stored in user.settings for persistent role differentiation
+- Dual authentication: email or phone registration
+- Avatar upload to S3 (signed URLs, max 5MB)
+- Token pair with userType included in JWT payload
+
+**Endpoints** (8):
+
+- `POST /auth/register` - Register new user with userType
+- `POST /auth/login` - User login (returns userType in token)
 - `POST /auth/refresh` - Refresh access token
 - `POST /auth/verify-otp` - Verify OTP
 - `POST /auth/logout` - Logout user
-- `GET /auth/me` - Get current user
-- `GET /auth/validate` - Validate token
+- `GET /auth/me` - Get current user profile
+- `POST /auth/validate` - Validate token
+- `POST /auth/upload-avatar` - Upload avatar to S3
 
 ### Users Module (`apps/backend/src/modules/users`)
 
@@ -362,12 +371,49 @@ Total: 28 endpoints
 - Custom aspects: 16/9 for property cards
 - Theme extensions: shadows, borders, line-heights
 
-**Progress**: 25% complete (Phase 0 done)
+### Authentication Components (Phase 1)
+
+**Auth Service** (`apps/frontend/src/services/auth.service.ts`)
+
+- API client for authentication endpoints
+- Methods: register(), login(), refresh(), logout(), getCurrentUser()
+- Token management (get/set/clear access and refresh tokens)
+- Error handling and response transformation
+
+**Auth Context** (`apps/frontend/src/contexts/AuthContext.tsx`)
+
+- Global authentication state management
+- useAuth() hook for consuming auth state
+- State: user, isLoading, error, isAuthenticated
+- Methods: login(), logout(), register()
+- Automatic token refresh on mount
+
+**Protected Route Component** (`apps/frontend/src/components/auth/ProtectedRoute.tsx`)
+
+- Wrapper for routes requiring authentication
+- Checks user type (partner vs buyer)
+- Checks required roles
+- Redirects to login if not authenticated
+- Shows loading spinner during auth verification
+- Prevents unauthorized access to dashboards
+
+**Auth Pages** (11 new pages)
+
+- `/login` - Login form with email/password
+- `/register` - Registration with user type selector (Partner/Buyer)
+- `/dashboard/partner` - Partner dashboard (list properties, view leads)
+- `/dashboard/buyer` - Buyer dashboard (search properties, view favorites)
+- `/profile` - User profile management with avatar upload
+- Additional views: listings, leads, search, favorites
+
+**Frontend Progress**: 50% complete (Phase 1 Auth)
 
 - Foundation: ✅ Complete
-- Core layouts & components: ✅ Complete (Header, Footer, PropertyCard)
-- Landing page: ✅ Complete with mock data
-- Remaining: Auth pages, listing creation, search results, user dashboard
+- Core layouts & components: ✅ Complete
+- Authentication pages: ✅ Complete (Login, Register, Dashboards)
+- Protected routes: ✅ Complete
+- Avatar upload: ✅ Complete (S3 integration)
+- Remaining: Listing creation, advanced search, admin features
 
 ## Testing Strategy
 

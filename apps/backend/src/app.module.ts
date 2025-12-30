@@ -10,11 +10,13 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ListingsModule } from './modules/listings/listings.module';
 import { SeedModule } from './database/seeds/seed.module';
+import { UploadModule } from './modules/upload/upload.module';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
 import redisConfig from './config/redis.config';
+import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
@@ -40,9 +42,11 @@ import redisConfig from './config/redis.config';
       },
     ]),
     EventEmitterModule.forRoot(),
+    S3Module,
     AuthModule,
     UsersModule,
     ListingsModule,
+    UploadModule,
     SeedModule,
   ],
   controllers: [AppController],
