@@ -53,7 +53,7 @@ export default function LoginPage() {
       }
 
       // Login with password
-      const response = await login({
+      await login({
         identifier,
         password,
         rememberMe,

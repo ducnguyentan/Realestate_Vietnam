@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -105,9 +106,11 @@ export function Header() {
                   aria-expanded={isUserMenuOpen}
                 >
                   {user.avatar ? (
-                    <img
+                    <Image
                       src={user.avatar}
                       alt={user.fullName}
+                      width={32}
+                      height={32}
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
@@ -245,9 +248,11 @@ export function Header() {
                 <>
                   <div className="mb-3 flex items-center gap-2 px-3 py-2">
                     {user.avatar ? (
-                      <img
+                      <Image
                         src={user.avatar}
                         alt={user.fullName}
+                        width={40}
+                        height={40}
                         className="h-10 w-10 rounded-full object-cover"
                       />
                     ) : (

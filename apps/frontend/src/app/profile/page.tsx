@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { UploadService } from '@/services/upload.service';
 
 function ProfileContent() {
-  const { user, updateUser } = useAuth();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'info' | 'avatar' | 'password' | 'kyc'>('info');
 
   // Personal Info State
@@ -128,7 +129,7 @@ function ProfileContent() {
 
     setUploadingAvatar(true);
     try {
-      const result = await UploadService.uploadSingle(avatar);
+      await UploadService.uploadSingle(avatar);
       // TODO: Call API to update user avatar
       setSuccessMessage('Cập nhật ảnh đại diện thành công');
       setTimeout(() => setSuccessMessage(''), 3000);
@@ -183,8 +184,8 @@ function ProfileContent() {
 
     setIsSubmitting(true);
     try {
-      const frontResult = await UploadService.uploadDocument(idFront);
-      const backResult = await UploadService.uploadDocument(idBack);
+      await UploadService.uploadDocument(idFront);
+      await UploadService.uploadDocument(idBack);
       // TODO: Call API to submit KYC
       setSuccessMessage('Gửi hồ sơ xác thực thành công. Chúng tôi sẽ xem xét trong 24-48 giờ.');
       setTimeout(() => setSuccessMessage(''), 5000);
@@ -325,9 +326,11 @@ function ProfileContent() {
                 <div className="flex flex-col items-center gap-lg">
                   {avatarPreview ? (
                     <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-gray-light">
-                      <img
+                      <Image
                         src={avatarPreview}
                         alt="Avatar"
+                        width={160}
+                        height={160}
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -487,11 +490,7 @@ function ProfileContent() {
                     </label>
                     <div className="relative aspect-video overflow-hidden rounded-lg border-2 border-dashed border-gray-light bg-cream">
                       {idFrontPreview ? (
-                        <img
-                          src={idFrontPreview}
-                          alt="ID Front"
-                          className="h-full w-full object-cover"
-                        />
+                        <Image src={idFrontPreview} alt="ID Front" fill className="object-cover" />
                       ) : (
                         <div className="flex h-full flex-col items-center justify-center text-gray-medium">
                           <span className="text-4xl">📄</span>
@@ -523,11 +522,7 @@ function ProfileContent() {
                     </label>
                     <div className="relative aspect-video overflow-hidden rounded-lg border-2 border-dashed border-gray-light bg-cream">
                       {idBackPreview ? (
-                        <img
-                          src={idBackPreview}
-                          alt="ID Back"
-                          className="h-full w-full object-cover"
-                        />
+                        <Image src={idBackPreview} alt="ID Back" fill className="object-cover" />
                       ) : (
                         <div className="flex h-full flex-col items-center justify-center text-gray-medium">
                           <span className="text-4xl">📄</span>

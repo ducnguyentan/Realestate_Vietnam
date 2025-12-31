@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 
@@ -56,9 +57,11 @@ function BuyerDashboardContent() {
             <div className="mb-lg">
               <div className="flex items-center gap-md">
                 {user?.avatar ? (
-                  <img
+                  <Image
                     src={user.avatar}
                     alt={user.fullName}
+                    width={48}
+                    height={48}
                     className="h-12 w-12 rounded-full object-cover"
                   />
                 ) : (
@@ -182,10 +185,11 @@ function BuyerDashboardContent() {
                   className="overflow-hidden rounded-xl border border-gray-light transition-all hover:shadow-lg"
                 >
                   <div className="relative aspect-video">
-                    <img
+                    <Image
                       src={property.image}
                       alt={property.title}
-                      className="h-full w-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <button className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white bg-opacity-90 text-xl transition-all hover:scale-110 hover:bg-opacity-100">
                       ❤️

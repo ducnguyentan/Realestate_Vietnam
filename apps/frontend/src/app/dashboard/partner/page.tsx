@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 
@@ -26,9 +27,11 @@ function PartnerDashboardContent() {
             <div className="mb-lg">
               <div className="flex items-center gap-md">
                 {user?.avatar ? (
-                  <img
+                  <Image
                     src={user.avatar}
                     alt={user.fullName}
+                    width={48}
+                    height={48}
                     className="h-12 w-12 rounded-full object-cover"
                   />
                 ) : (

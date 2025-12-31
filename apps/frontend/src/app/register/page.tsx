@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { UploadService } from '@/services/upload.service';
 import type { UserType } from '@/types/auth';
@@ -305,9 +306,11 @@ export default function RegisterPage() {
               <div className="flex items-center gap-md">
                 {avatarPreview ? (
                   <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-gray-light">
-                    <img
+                    <Image
                       src={avatarPreview}
                       alt="Avatar preview"
+                      width={96}
+                      height={96}
                       className="h-full w-full object-cover"
                     />
                   </div>
