@@ -36,11 +36,30 @@ Go to your Vercel project settings and update the following:
 
 ### 3. Environment Variables
 
-Make sure these are set in Vercel:
+**CRITICAL:** Add this environment variable in Vercel:
+
+Go to: Settings → Environment Variables → Add New
 
 ```
-NEXT_PUBLIC_API_URL=https://your-backend-url.com
+Name: NEXT_PUBLIC_API_URL
+Value: https://your-backend-url.com/api
+Environments: Production, Preview, Development (select all)
 ```
+
+**Important Notes:**
+
+- Must use `NEXT_PUBLIC_` prefix for client-side access
+- Include `/api` path in the URL
+- Replace `your-backend-url.com` with your actual backend domain
+- Example: `https://realestate-backend.railway.app/api`
+
+**After adding the variable:**
+
+1. Click "Save"
+2. Go to Deployments tab
+3. Click "Redeploy" to apply the new environment variable
+
+**Without this variable, the app will try to call `localhost:3000` and fail with "Failed to fetch" error.**
 
 ## Alternative: Use vercel.json (Not Recommended for Next.js)
 
