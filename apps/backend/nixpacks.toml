@@ -8,8 +8,9 @@ cmds = ['pnpm install']
 cmds = [
   'pnpm --filter @realestate/database build',
   'pnpm --filter backend build',
+  'pnpm rebuild bcrypt --build-from-source',
   'echo "=== Build output check ===" && find apps/backend/dist -name "*.js" | head -5'
 ]
 
 [start]
-cmd = 'node apps/backend/dist/apps/backend/src/main.js'
+cmd = 'cd /app && node apps/backend/dist/apps/backend/src/main.js'
