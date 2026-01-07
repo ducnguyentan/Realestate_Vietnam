@@ -1,16 +1,12 @@
+// IMPORTANT: This must be the first import to ensure polyfills are applied
+import './polyfills';
+
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import * as crypto from 'node:crypto';
-
-// Polyfill for crypto global in Railway environment
-if (!globalThis.crypto) {
-  // @ts-expect-error - Railway environment doesn't have globalThis.crypto
-  globalThis.crypto = crypto.webcrypto;
-}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
