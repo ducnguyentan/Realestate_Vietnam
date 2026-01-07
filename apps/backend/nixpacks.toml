@@ -6,6 +6,7 @@ cmds = ['pnpm install']
 
 [phases.build]
 cmds = [
+  'rm -rf packages/database/dist',
   'pnpm --filter @realestate/database build',
   'pnpm --filter backend build'
 ]
