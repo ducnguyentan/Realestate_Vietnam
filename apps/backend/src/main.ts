@@ -4,6 +4,12 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { webcrypto } from 'node:crypto';
+
+// Polyfill for crypto.randomUUID in Railway environment
+if (!globalThis.crypto) {
+  globalThis.crypto = webcrypto as Crypto;
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
