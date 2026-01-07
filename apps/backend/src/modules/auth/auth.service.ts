@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '@realestate/database';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { RegisterDto, LoginDto, VerifyOtpDto } from './dto';
 import { OtpService } from './services/otp.service';
 import { TokenService, TokenPair } from './services/token.service';

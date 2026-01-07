@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '@realestate/database';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { UpdateProfileDto, ChangePasswordDto, VerifyIdentityDto } from './dto';
 
 @Injectable()
