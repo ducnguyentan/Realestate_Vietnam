@@ -4,11 +4,12 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { webcrypto } from 'node:crypto';
+import * as crypto from 'node:crypto';
 
-// Polyfill for crypto.randomUUID in Railway environment
+// Polyfill for crypto global in Railway environment
 if (!globalThis.crypto) {
-  globalThis.crypto = webcrypto as Crypto;
+  // @ts-expect-error - Railway environment doesn't have globalThis.crypto
+  globalThis.crypto = crypto.webcrypto;
 }
 
 async function bootstrap() {
