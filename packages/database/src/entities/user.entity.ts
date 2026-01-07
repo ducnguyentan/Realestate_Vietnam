@@ -73,11 +73,11 @@ export class User extends BaseEntity {
 
   // Relations
   @OneToMany(() => UserRole, (userRole) => userRole.user)
-  userRoles: UserRole[] = [];
+  userRoles!: UserRole[];
 
   @OneToOne(() => Agent, (agent) => agent.user)
   agent: Agent | null = null;
 
   @OneToMany(() => Listing, (listing) => listing.user)
-  listings: Listing[] = [];
+  listings!: Listing[];
 }

@@ -25,5 +25,5 @@ export class Role {
   createdAt: Date = new Date();
 
   @OneToMany(() => UserRole, (userRole) => userRole.role)
-  userRoles: UserRole[] = [];
+  userRoles!: UserRole[];
 }

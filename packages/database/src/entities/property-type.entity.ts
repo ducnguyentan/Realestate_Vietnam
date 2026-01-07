@@ -34,7 +34,7 @@ export class PropertyType {
   parent: PropertyType | null = null;
 
   @OneToMany(() => PropertyType, (pt) => pt.parent)
-  children: PropertyType[] = [];
+  children!: PropertyType[];
 
   @Column({ name: 'sort_order', type: 'int', default: 0 })
   sortOrder: number = 0;
@@ -46,5 +46,5 @@ export class PropertyType {
   createdAt: Date = new Date();
 
   @OneToMany(() => Listing, (listing) => listing.propertyType)
-  listings: Listing[] = [];
+  listings!: Listing[];
 }

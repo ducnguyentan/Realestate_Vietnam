@@ -1,10 +1,4 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 
 @Entity('admin_units')
@@ -29,7 +23,7 @@ export class AdminUnit extends BaseEntity {
   parent: AdminUnit | null = null;
 
   @OneToMany(() => AdminUnit, (unit) => unit.parent)
-  children: AdminUnit[] = [];
+  children!: AdminUnit[];
 
   @Column({ type: 'varchar', length: 20, nullable: true })
   region: string | null = null;
