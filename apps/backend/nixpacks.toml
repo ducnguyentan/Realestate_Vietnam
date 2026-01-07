@@ -5,7 +5,10 @@ nixPkgs = ['nodejs-18_x', 'pnpm']
 cmds = ['pnpm install']
 
 [phases.build]
-cmds = ['pnpm build']
+cmds = [
+  'pnpm --filter @realestate/database build',
+  'pnpm --filter backend build'
+]
 
 [start]
-cmd = 'node dist/main.js'
+cmd = 'node apps/backend/dist/main.js'
