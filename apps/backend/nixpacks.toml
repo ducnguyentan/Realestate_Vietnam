@@ -7,7 +7,8 @@ cmds = ['pnpm install']
 [phases.build]
 cmds = [
   'pnpm --filter @realestate/database build',
-  'pnpm --filter backend build'
+  'pnpm --filter backend build',
+  'echo "=== Build output check ===" && find apps/backend/dist -name "*.js" | head -5'
 ]
 
 [start]
