@@ -14,6 +14,7 @@ export interface TokenPair {
   accessToken: string;
   refreshToken: string;
   expiresIn: number;
+  user?: User;
 }
 
 @Injectable()
@@ -50,6 +51,7 @@ export class TokenService {
       accessToken,
       refreshToken,
       expiresIn: 15 * 60, // 15 minutes in seconds
+      user,
     };
   }
 
