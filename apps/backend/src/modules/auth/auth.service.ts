@@ -123,7 +123,7 @@ export class AuthService {
   async login(loginDto: LoginDto): Promise<TokenPair> {
     loginDto.validate();
 
-    const identifier = loginDto.phone || loginDto.email!;
+    const identifier = loginDto.identifier || loginDto.phone || loginDto.email!;
 
     // Find user
     const user = await this.userRepository.findOne({

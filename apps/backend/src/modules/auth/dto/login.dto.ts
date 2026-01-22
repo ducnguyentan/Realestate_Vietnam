@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsBoolean } from 'class-validator';
 
 export class LoginDto {
   @IsOptional()
@@ -11,15 +11,24 @@ export class LoginDto {
 
   @IsOptional()
   @IsString()
+  identifier?: string;
+
+  @IsOptional()
+  @IsString()
   password?: string;
 
   @IsOptional()
   @IsString()
   otp?: string;
 
+  @IsOptional()
+  @IsBoolean()
+  rememberMe?: boolean;
+
   validate() {
-    if (!this.phone && !this.email) {
-      throw new Error('Either phone or email is required');
+    const loginIdentifier = this.identifier || this.phone || this.email;
+    if (!loginIdentifier) {
+      throw new Error('Either identifier, phone or email is required');
     }
     if (!this.password && !this.otp) {
       throw new Error('Either password or OTP is required');
