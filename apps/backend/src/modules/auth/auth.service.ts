@@ -125,14 +125,24 @@ export class AuthService {
 
     const identifier = loginDto.identifier || loginDto.phone || loginDto.email!;
 
+    console.log('[AUTH] Login attempt for:', identifier);
+
     // Find user
     const user = await this.userRepository.findOne({
       where: [{ phone: identifier }, { email: identifier }],
     });
 
     if (!user) {
+      console.log('[AUTH] User not found:', identifier);
       throw new UnauthorizedException('Invalid credentials');
     }
+
+    console.log(
+      '[AUTH] User found:',
+      user.email || user.phone,
+      'hasPassword:',
+      !!user.passwordHash,
+    );
 
     // Check if user is active
     if (user.status !== 'active') {
@@ -151,6 +161,7 @@ export class AuthService {
         loginDto.password,
         user.passwordHash,
       );
+      console.log('[AUTH] Password check:', isPasswordValid);
       if (!isPasswordValid) {
         throw new UnauthorizedException('Invalid credentials');
       }
