@@ -1,5 +1,18 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Get,
+  Request,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto, LoginDto, VerifyOtpDto, RefreshTokenDto } from './dto';
 import { Public } from './decorators/public.decorator';
@@ -65,6 +78,16 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Invalid refresh token' })
   async refresh(@Body() refreshTokenDto: RefreshTokenDto) {
     return this.authService.refreshToken(refreshTokenDto.refreshToken);
+  }
+
+  @Get('me')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get current user profile' })
+  @ApiResponse({ status: 200, description: 'User profile returned' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async getMe(@Request() req: any) {
+    // req.user is set by JWT strategy after token validation
+    return req.user;
   }
 
   @Post('logout')
