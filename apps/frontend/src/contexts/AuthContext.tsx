@@ -8,8 +8,8 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
-  login: (data: LoginData) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
+  login: (data: LoginData) => Promise<User>;
+  register: (data: RegisterData) => Promise<User>;
   logout: () => Promise<void>;
   updateUser: (user: User) => void;
 }
