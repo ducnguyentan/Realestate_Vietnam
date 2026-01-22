@@ -39,28 +39,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadUser();
   }, []);
 
-  const login = async (data: LoginData) => {
+  const login = async (data: LoginData): Promise<User> => {
     setLoading(true);
     try {
       const response = await AuthService.login(data);
       setUser(response.user);
+      setLoading(false);
+      return response.user;
     } catch (error) {
       setLoading(false);
       throw error;
     }
-    setLoading(false);
   };
 
-  const register = async (data: RegisterData) => {
+  const register = async (data: RegisterData): Promise<User> => {
     setLoading(true);
     try {
       const response = await AuthService.register(data);
       setUser(response.user);
+      setLoading(false);
+      return response.user;
     } catch (error) {
       setLoading(false);
       throw error;
     }
-    setLoading(false);
   };
 
   const logout = async () => {
