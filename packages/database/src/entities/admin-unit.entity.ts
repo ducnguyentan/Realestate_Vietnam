@@ -4,16 +4,16 @@ import { BaseEntity } from './base.entity';
 @Entity('admin_units')
 export class AdminUnit extends BaseEntity {
   @Column({ type: 'varchar', length: 20, unique: true })
-  code: string = '';
+  code!: string;
 
   @Column({ type: 'varchar', length: 100 })
-  name: string = '';
+  name!: string;
 
   @Column({ name: 'name_en', type: 'varchar', length: 100, nullable: true })
   nameEn: string | null = null;
 
   @Column({ type: 'int' })
-  level: number = 0;
+  level!: number;
 
   @Column({ name: 'parent_code', type: 'varchar', length: 20, nullable: true })
   parentCode: string | null = null;

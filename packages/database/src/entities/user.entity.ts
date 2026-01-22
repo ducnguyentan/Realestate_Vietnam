@@ -45,13 +45,13 @@ export class User extends BaseEntity {
   status: string = 'active';
 
   @Column({ name: 'phone_verified', type: 'boolean', default: false })
-  phoneVerified: boolean = false;
+  phoneVerified!: boolean;
 
   @Column({ name: 'email_verified', type: 'boolean', default: false })
-  emailVerified: boolean = false;
+  emailVerified!: boolean;
 
   @Column({ name: 'identity_verified', type: 'boolean', default: false })
-  identityVerified: boolean = false;
+  identityVerified!: boolean;
 
   @Column({ name: 'identity_verified_at', type: 'timestamptz', nullable: true })
   identityVerifiedAt: Date | null = null;

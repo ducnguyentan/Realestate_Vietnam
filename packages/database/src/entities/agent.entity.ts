@@ -6,7 +6,7 @@ import { Listing } from './listing.entity';
 @Entity('agents')
 export class Agent extends BaseEntity {
   @Column({ name: 'user_id', type: 'uuid', unique: true })
-  userId: string = '';
+  userId!: string;
 
   @OneToOne(() => User, (user) => user.agent, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
@@ -19,7 +19,7 @@ export class Agent extends BaseEntity {
   companyName: string | null = null;
 
   @Column({ name: 'experience_years', type: 'int', default: 0 })
-  experienceYears: number = 0;
+  experienceYears!: number;
 
   @Column({ type: 'jsonb', default: [] })
   specializations: string[] = [];
@@ -31,13 +31,13 @@ export class Agent extends BaseEntity {
   commissionRate: number = 2.0;
 
   @Column({ name: 'total_listings', type: 'int', default: 0 })
-  totalListings: number = 0;
+  totalListings!: number;
 
   @Column({ name: 'total_deals', type: 'int', default: 0 })
-  totalDeals: number = 0;
+  totalDeals!: number;
 
   @Column({ name: 'rating_avg', type: 'decimal', precision: 3, scale: 2, default: 0 })
-  ratingAvg: number = 0;
+  ratingAvg!: number;
 
   @Column({ type: 'varchar', length: 20, default: 'pending' })
   status: string = 'pending';

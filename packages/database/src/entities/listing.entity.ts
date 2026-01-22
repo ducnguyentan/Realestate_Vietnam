@@ -1,10 +1,4 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  JoinColumn,
-  Index,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { User } from './user.entity';
 import { Agent } from './agent.entity';
@@ -20,10 +14,10 @@ import { AdminUnit } from './admin-unit.entity';
 @Index('idx_listings_featured', ['isFeatured', 'featuredUntil'])
 export class Listing extends BaseEntity {
   @Column({ type: 'varchar', length: 20, unique: true })
-  code: string = '';
+  code!: string;
 
   @Column({ name: 'user_id', type: 'uuid' })
-  userId: string = '';
+  userId!: string;
 
   @ManyToOne(() => User, (user) => user.listings)
   @JoinColumn({ name: 'user_id' })
@@ -40,14 +34,14 @@ export class Listing extends BaseEntity {
   transactionType: 'sell' | 'rent' = 'sell';
 
   @Column({ name: 'property_type_id', type: 'uuid' })
-  propertyTypeId: string = '';
+  propertyTypeId!: string;
 
   @ManyToOne(() => PropertyType, (pt) => pt.listings)
   @JoinColumn({ name: 'property_type_id' })
   propertyType: PropertyType | null = null;
 
   @Column({ type: 'varchar', length: 200 })
-  title: string = '';
+  title!: string;
 
   @Column({ type: 'text', nullable: true })
   description: string | null = null;
@@ -56,14 +50,14 @@ export class Listing extends BaseEntity {
   highlights: string[] = [];
 
   @Column({ name: 'admin_unit_code', type: 'varchar', length: 20 })
-  adminUnitCode: string = '';
+  adminUnitCode!: string;
 
   @ManyToOne(() => AdminUnit)
   @JoinColumn({ name: 'admin_unit_code', referencedColumnName: 'code' })
   adminUnit: AdminUnit | null = null;
 
   @Column({ type: 'text' })
-  address: string = '';
+  address!: string;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
   street: string | null = null;
@@ -96,13 +90,13 @@ export class Listing extends BaseEntity {
   direction: string | null = null;
 
   @Column({ type: 'bigint' })
-  price: number = 0;
+  price!: number;
 
   @Column({ name: 'price_unit', type: 'varchar', length: 20, default: 'total' })
   priceUnit: string = 'total';
 
   @Column({ name: 'price_negotiable', type: 'boolean', default: false })
-  priceNegotiable: boolean = false;
+  priceNegotiable!: boolean;
 
   @Column({ name: 'legal_status', type: 'varchar', length: 30, nullable: true })
   legalStatus: string | null = null;
@@ -111,7 +105,7 @@ export class Listing extends BaseEntity {
   ownershipType: string | null = null;
 
   @Column({ name: 'is_mortgaged', type: 'boolean', default: false })
-  isMortgaged: boolean = false;
+  isMortgaged!: boolean;
 
   @Column({ type: 'jsonb', default: [] })
   amenities: string[] = [];
@@ -123,7 +117,7 @@ export class Listing extends BaseEntity {
   status: string = 'draft';
 
   @Column({ name: 'is_featured', type: 'boolean', default: false })
-  isFeatured: boolean = false;
+  isFeatured!: boolean;
 
   @Column({ name: 'featured_until', type: 'timestamptz', nullable: true })
   featuredUntil: Date | null = null;
@@ -132,13 +126,13 @@ export class Listing extends BaseEntity {
   slug: string | null = null;
 
   @Column({ type: 'int', default: 0 })
-  views: number = 0;
+  views!: number;
 
   @Column({ type: 'int', default: 0 })
-  saves: number = 0;
+  saves!: number;
 
   @Column({ type: 'int', default: 0 })
-  contacts: number = 0;
+  contacts!: number;
 
   @Column({ name: 'quality_score', type: 'decimal', precision: 3, scale: 2, nullable: true })
   qualityScore: number | null = null;

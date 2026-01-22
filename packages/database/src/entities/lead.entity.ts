@@ -1,9 +1,4 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Listing } from './listing.entity';
 import { User } from './user.entity';
@@ -12,21 +7,21 @@ import { Agent } from './agent.entity';
 @Entity('leads')
 export class Lead extends BaseEntity {
   @Column({ name: 'listing_id', type: 'uuid' })
-  listingId: string = '';
+  listingId!: string;
 
   @ManyToOne(() => Listing)
   @JoinColumn({ name: 'listing_id' })
   listing: Listing | null = null;
 
   @Column({ name: 'buyer_user_id', type: 'uuid' })
-  buyerUserId: string = '';
+  buyerUserId!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'buyer_user_id' })
   buyerUser: User | null = null;
 
   @Column({ name: 'seller_user_id', type: 'uuid' })
-  sellerUserId: string = '';
+  sellerUserId!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'seller_user_id' })

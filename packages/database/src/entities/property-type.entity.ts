@@ -12,13 +12,13 @@ import { Listing } from './listing.entity';
 @Entity('property_types')
 export class PropertyType {
   @PrimaryGeneratedColumn('uuid')
-  id: string = '';
+  id!: string;
 
   @Column({ type: 'varchar', length: 30, unique: true })
-  code: string = '';
+  code!: string;
 
   @Column({ type: 'varchar', length: 100 })
-  name: string = '';
+  name!: string;
 
   @Column({ name: 'name_en', type: 'varchar', length: 100, nullable: true })
   nameEn: string | null = null;
@@ -37,13 +37,13 @@ export class PropertyType {
   children!: PropertyType[];
 
   @Column({ name: 'sort_order', type: 'int', default: 0 })
-  sortOrder: number = 0;
+  sortOrder!: number;
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean = true;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  createdAt: Date = new Date();
+  createdAt!: Date;
 
   @OneToMany(() => Listing, (listing) => listing.propertyType)
   listings!: Listing[];

@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  JoinColumn,
-  PrimaryGeneratedColumn,
-  Unique,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { User } from './user.entity';
 import { Role } from './role.entity';
 
@@ -13,16 +6,16 @@ import { Role } from './role.entity';
 @Unique(['userId', 'roleId'])
 export class UserRole {
   @PrimaryGeneratedColumn('uuid')
-  id: string = '';
+  id!: string;
 
   @Column({ name: 'user_id', type: 'uuid' })
-  userId: string = '';
+  userId!: string;
 
   @Column({ name: 'role_id', type: 'uuid' })
-  roleId: string = '';
+  roleId!: string;
 
   @Column({ name: 'granted_at', type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-  grantedAt: Date = new Date();
+  grantedAt!: Date;
 
   @ManyToOne(() => User, (user) => user.userRoles, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })

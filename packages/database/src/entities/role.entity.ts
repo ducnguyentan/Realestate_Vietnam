@@ -4,13 +4,13 @@ import { UserRole } from './user-role.entity';
 @Entity('roles')
 export class Role {
   @PrimaryGeneratedColumn('uuid')
-  id: string = '';
+  id!: string;
 
   @Column({ type: 'varchar', length: 50, unique: true })
-  name: string = '';
+  name!: string;
 
   @Column({ name: 'display_name', type: 'varchar', length: 100 })
-  displayName: string = '';
+  displayName!: string;
 
   @Column({ type: 'text', nullable: true })
   description: string | null = null;
@@ -19,10 +19,10 @@ export class Role {
   permissions: string[] = [];
 
   @Column({ name: 'is_system', type: 'boolean', default: false })
-  isSystem: boolean = false;
+  isSystem!: boolean;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  createdAt: Date = new Date();
+  createdAt!: Date;
 
   @OneToMany(() => UserRole, (userRole) => userRole.role)
   userRoles!: UserRole[];
