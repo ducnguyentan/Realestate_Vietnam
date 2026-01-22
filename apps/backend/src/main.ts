@@ -15,9 +15,36 @@ async function bootstrap() {
   // Security
   app.use(helmet());
 
-  // CORS
+  // CORS - Accept Vercel preview domains and configured origins
+  const corsOrigin = configService.get<unknown>('app.corsOrigin');
   app.enableCors({
-    origin: configService.get<unknown>('app.corsOrigin'),
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, Postman, etc.)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      // Check if origin matches Vercel preview domains pattern
+      const vercelPattern =
+        /^https:\/\/realestate-vietnam-[a-z0-9]+-ducnguyentans-projects\.vercel\.app$/;
+      if (vercelPattern.test(origin)) {
+        return callback(null, true);
+      }
+
+      // Check configured origins
+      if (Array.isArray(corsOrigin)) {
+        if (corsOrigin.includes(origin)) {
+          return callback(null, true);
+        }
+      } else if (typeof corsOrigin === 'string') {
+        if (corsOrigin === origin) {
+          return callback(null, true);
+        }
+      }
+
+      // Reject
+      callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
   });
 
