@@ -66,11 +66,11 @@ function BuyerDashboardContent() {
                   />
                 ) : (
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-white">
-                    {user?.fullName.charAt(0)}
+                    {user?.fullName?.charAt(0) || '?'}
                   </div>
                 )}
                 <div className="flex-1">
-                  <p className="font-medium text-gray-dark">{user?.fullName}</p>
+                  <p className="font-medium text-gray-dark">{user?.fullName || 'User'}</p>
                   <p className="text-xs text-gray-medium">Khách hàng</p>
                 </div>
               </div>
@@ -103,7 +103,7 @@ function BuyerDashboardContent() {
               Tìm kiếm bất động sản
             </h1>
             <p className="mt-xs text-base text-gray-medium">
-              Chào mừng {user?.fullName} quay trở lại
+              Chào mừng {user?.fullName || 'bạn'} quay trở lại
             </p>
           </div>
 

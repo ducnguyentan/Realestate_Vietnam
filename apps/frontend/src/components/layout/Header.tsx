@@ -115,10 +115,10 @@ export function Header() {
                     />
                   ) : (
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-light text-sm font-medium">
-                      {user.fullName.charAt(0)}
+                      {user.fullName?.charAt(0) || '?'}
                     </div>
                   )}
-                  <span className="font-medium">{user.fullName}</span>
+                  <span className="font-medium">{user.fullName || 'User'}</span>
                   <svg
                     className={`h-4 w-4 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`}
                     fill="none"
@@ -257,11 +257,11 @@ export function Header() {
                       />
                     ) : (
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light text-white">
-                        {user.fullName.charAt(0)}
+                        {user.fullName?.charAt(0) || '?'}
                       </div>
                     )}
                     <div>
-                      <p className="font-medium text-white">{user.fullName}</p>
+                      <p className="font-medium text-white">{user.fullName || 'User'}</p>
                       <p className="text-xs text-white text-opacity-70">
                         {user.userType === 'partner' ? 'Đối tác' : 'Khách hàng'}
                       </p>
