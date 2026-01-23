@@ -51,6 +51,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log('[AuthContext] Logging in...');
       const response = await AuthService.login(data);
       console.log('[AuthContext] Login response:', response);
+      console.log('[AuthContext] Response.user:', response.user);
+      console.log('[AuthContext] Response keys:', Object.keys(response));
+
+      if (!response.user) {
+        console.error('[AuthContext] ERROR: response.user is undefined!');
+        throw new Error('Server không trả về thông tin người dùng');
+      }
+
       setUser(response.user);
       setLoading(false);
       return response.user;
