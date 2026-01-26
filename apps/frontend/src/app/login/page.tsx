@@ -53,16 +53,18 @@ export default function LoginPage() {
       }
 
       // Login with password
-      await login({
+      const user = await login({
         identifier,
         password,
         rememberMe,
       });
 
-      // Get user type from response and redirect
-      // Note: We need to access the user from context after login
-      // For now, we'll redirect to a general dashboard
-      router.push('/dashboard');
+      // Redirect based on user type
+      if (user.userType === 'partner') {
+        router.push('/dashboard/partner');
+      } else {
+        router.push('/dashboard/buyer');
+      }
     } catch (error) {
       setErrors({
         submit: error instanceof Error ? error.message : 'Đăng nhập thất bại. Vui lòng thử lại.',

@@ -23,21 +23,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Load user on mount if token exists
   useEffect(() => {
     const loadUser = async () => {
-      console.log('[AuthContext] Loading user...');
       try {
         if (AuthService.isAuthenticated()) {
-          console.log('[AuthContext] Token found, fetching user...');
           const currentUser = await AuthService.getCurrentUser();
-          console.log('[AuthContext] User loaded:', currentUser);
           setUser(currentUser);
-        } else {
-          console.log('[AuthContext] No token found');
         }
       } catch (error) {
         console.error('[AuthContext] Failed to load user:', error);
         AuthService.clearTokens();
       } finally {
-        console.log('[AuthContext] Loading complete');
         setLoading(false);
       }
     };
@@ -48,14 +42,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (data: LoginData): Promise<User> => {
     setLoading(true);
     try {
-      console.log('[AuthContext] Logging in...');
       const response = await AuthService.login(data);
-      console.log('[AuthContext] Login response:', response);
-      console.log('[AuthContext] Response.user:', response.user);
-      console.log('[AuthContext] Response keys:', Object.keys(response));
 
       if (!response.user) {
-        console.error('[AuthContext] ERROR: response.user is undefined!');
         throw new Error('Server không trả về thông tin người dùng');
       }
 
