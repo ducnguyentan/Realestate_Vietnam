@@ -184,13 +184,10 @@ function BuyerDashboardContent() {
                   key={property.id}
                   className="overflow-hidden rounded-xl border border-gray-light transition-all hover:shadow-lg"
                 >
-                  <div className="relative aspect-video">
-                    <Image
-                      src={property.image}
-                      alt={property.title}
-                      fill
-                      className="object-cover"
-                    />
+                  <div className="relative aspect-video bg-gradient-to-br from-primary to-primary-light">
+                    <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-30">
+                      🏠
+                    </div>
                     <button className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white bg-opacity-90 text-xl transition-all hover:scale-110 hover:bg-opacity-100">
                       ❤️
                     </button>
