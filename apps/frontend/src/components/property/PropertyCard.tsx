@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface PropertyCardProps {
@@ -43,15 +42,10 @@ export function PropertyCard({
   return (
     <article className="group overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       {/* Image Container */}
-      <div className="relative aspect-property overflow-hidden">
-        <Image
-          src={imageUrl}
-          alt={title}
-          fill
-          sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
-        />
+      <div className="relative aspect-property overflow-hidden bg-gradient-to-br from-primary to-primary-light">
+        <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-30">
+          🏠
+        </div>
 
         {/* Price Badge */}
         <div className="absolute left-3 top-3 rounded-md bg-danger px-3 py-1.5 shadow-lg">
