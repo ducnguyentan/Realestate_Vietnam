@@ -14,6 +14,7 @@ export class AuthService {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(data),
     });
 
@@ -39,6 +40,7 @@ export class AuthService {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(data),
     });
 
