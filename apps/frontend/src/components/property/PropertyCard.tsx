@@ -26,7 +26,6 @@ export function PropertyCard({
   bedrooms,
   bathrooms,
   propertyType,
-  imageUrl = '/placeholder-property.jpg',
   description,
   slug,
 }: PropertyCardProps) {
