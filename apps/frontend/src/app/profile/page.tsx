@@ -1,13 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { UploadService } from '@/services/upload.service';
 
 function ProfileContent() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'info' | 'avatar' | 'password' | 'kyc'>('info');
 
   // Personal Info State
@@ -198,10 +201,79 @@ function ProfileContent() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
+  const getDashboardPath = () => {
+    if (user?.userType === 'partner') return '/dashboard/partner';
+    if (user?.userType === 'buyer') return '/dashboard/buyer';
+    return '/';
+  };
+
   return (
-    <div className="min-h-screen bg-cream py-lg px-md">
-      <div className="mx-auto max-w-4xl">
+    <div className="min-h-screen bg-cream">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="mx-auto max-w-wide px-md py-md">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-xl text-white">
+                🏠
+              </div>
+              <span className="hidden font-heading text-xl font-bold text-primary tablet:inline">
+                Sàn Giao Dịch BĐS
+              </span>
+            </Link>
+
+            {/* Navigation */}
+            <nav className="flex items-center gap-md">
+              <Link
+                href={getDashboardPath()}
+                className="flex items-center gap-xs rounded-lg px-md py-sm text-sm font-medium text-gray-dark transition-colors hover:bg-cream"
+              >
+                <span>📊</span>
+                <span className="hidden tablet:inline">Dashboard</span>
+              </Link>
+
+              <div className="relative flex items-center gap-sm">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm text-white">
+                  {user?.fullName?.charAt(0) || '?'}
+                </div>
+                <div className="hidden tablet:block">
+                  <p className="text-sm font-medium text-gray-dark">{user?.fullName || 'User'}</p>
+                  <p className="text-xs text-gray-medium">
+                    {user?.userType === 'partner' ? 'Đối tác' : 'Khách hàng'}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-xs rounded-lg border border-gray-light px-md py-sm text-sm font-medium text-gray-dark transition-colors hover:bg-danger hover:text-white hover:border-danger"
+              >
+                <span>🚪</span>
+                <span className="hidden tablet:inline">Đăng xuất</span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="mx-auto max-w-4xl py-lg px-md">
         <div className="mb-lg">
+          <div className="flex items-center gap-md mb-sm">
+            <Link
+              href={getDashboardPath()}
+              className="flex items-center gap-xs text-sm text-primary-light hover:underline"
+            >
+              <span>←</span>
+              <span>Quay lại Dashboard</span>
+            </Link>
+          </div>
           <h1 className="font-heading text-3xl font-bold text-gray-dark tablet:text-4xl">
             Hồ sơ cá nhân
           </h1>
@@ -565,6 +637,7 @@ function ProfileContent() {
           </div>
         </div>
       </div>
+      {/* End Main Content */}
     </div>
   );
 }
