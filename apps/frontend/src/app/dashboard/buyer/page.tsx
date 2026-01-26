@@ -34,7 +34,6 @@ function BuyerDashboardContent() {
       beds: 3,
       baths: 2,
       area: '120m²',
-      image: 'https://placehold.co/400x300/0D47A1/FFFFFF/png?text=Property+1',
     },
     {
       id: 2,
@@ -44,7 +43,6 @@ function BuyerDashboardContent() {
       beds: 4,
       baths: 3,
       area: '200m²',
-      image: 'https://placehold.co/400x300/42A5F5/FFFFFF/png?text=Property+2',
     },
   ];
 
